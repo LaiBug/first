@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>掏宝购物</title>
+	  <script type="text/javascript" src="public/angular.min.js"></script>
+	  <script type="text/javascript" src="controller/shopController.js"></script>
+
+	  <div th:include="shop/public :: #head"></div>
+  </head>
+
+
+<body  id="app" ng-app="myApp" ng-controller="ShopController">
+<div th:include="shop/public :: #top-nav"></div>
+<!-- Header End====================================================================== -->
+<div id="carouselBlk">
+	<div id="myCarousel" class="carousel slide">
+		<div class="carousel-inner">
+		  <div class="item active">
+		  <div class="container">
+			<a href="register.html"><img src="/pics/bulletin/{{bulletin[0].pics}}" style="width:1300px;height: 400px"  alt="{{bulletin[0].title}}"/></a>
+			<div class="carousel-caption">
+				  <h4>{{bulletin[0].title}}</h4>
+				  <p>{{bulletin[0].content}}</p>
+				</div>
+		  </div>
+		  </div>
+		   <div class="item" ng-repeat="bul in bulletin | limitTo:-4">
+		   <div class="container">
+			<a href="register.html"><img src="/pics/bulletin/{{bul.pics}}" style="width:1300px;height: 400px"  alt=""/></a>
+			<div class="carousel-caption">
+				<h4>{{bul.title}}</h4>
+				<p>{{bul.content}}</p>
+			</div>
+		  </div>
+		  </div>
+		</div>
+		<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+		<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+	  </div> 
+</div>
+
+
+<div id="mainBody">
+	<div class="container">
+	<div class="row">
+		<!-- Sidebar ================================================== -->
+		<div th:include="shop/public :: #side"></div>
+		<!-- Sidebar end=============================================== -->
+
+		<div class="span9" >
+			<div class="well well-small">
+			<h4>特价商品 <small class="pull-right">更多</small></h4>
+				<div class="row-fluid">
+			<div id="featured" class="carousel slide">
+			<div class="carousel-inner">
+			  <div class="item active" >
+			  <ul class="thumbnails">
+				<li class="span3" ng-repeat="goods in dis | limitTo:4">
+				  <div class="thumbnail">
+					<a  href="#"><img src="/pics/goods/{{goods.pics}}" alt="" style="width: 150px;height:150px"/></a>
+					<div class="caption">
+						<strong><span style="font-size: larger;color:white; background-color: #8d4735" >{{goods.discount}}</span> 折</strong>
+					  <h5 ng-bind="goods.goodsName"></h5>
+					  <h4><a class="btn"  ng-click="addCart(goods)">Add To <i class="icon-shopping-cart"></i></a>
+						  <span class="pull-right" ng-bind="'$'+goods.price"></span>
+					  </h4>
+					</div>
+				  </div>
+				</li>
+			  </ul>
+			</div>
+
+			   <div class="item ">
+			  <ul class="thumbnails">
+				<li class="span3" ng-repeat="goods in dis |limitTo:-4">
+					<div class="thumbnail">
+						<a href="#"><img src="/pics/goods/{{goods.pics}}" alt="" style="width: 150px;height:150px"/></a>
+						<div class="caption">
+							<strong><span style="font-size: larger;color:white; background-color: #8d4735" >{{goods.discount}}</span> 折</strong>
+							<h5 ng-bind="goods.goodsName"></h5>
+							<h4><a class="btn"  ng-click="addCart(goods)">Add To <i class="icon-shopping-cart"></i></a>
+								<span class="pull-right" ng-bind="'$'+goods.price"></span>
+							</h4>
+						</div>
+					</div>
+				</li>
+			  </ul>
+			  </div>
+			  </div>
+			  <a class="left carousel-control" href="#featured" data-slide="prev">‹</a>
+			  <a class="right carousel-control" href="#featured" data-slide="next">›</a>
+			  </div>
+			  </div>
+		</div>
+		<h4>最新商品 </h4>
+			  <ul class="thumbnails">
+				<li class="span3" ng-repeat="goods in list">
+				  <div class="thumbnail">
+					  <i class="tag" ></i>
+					<a  href="/admin/shop/detail?id={{goods.id}}"><img src="/pics/goods/{{goods.pics}}" alt="{{goods.remark}}" style="width: 150px;height:150px"/></a>
+					<div class="caption">
+					  <h5 ng-bind="goods.goodsName"></h5>
+					  <p> 
+						写店家名
+					  </p>
+					 
+					  <h4 style="text-align:center"><a class="btn" href="/admin/shop/detail?id={{goods.id}}"> <i class="icon-zoom-in"></i></a> <a class="btn" ng-click="addCart(goods)">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#" ng-bind="'$'+goods.price"></a></h4>
+					</div>
+				  </div>
+				</li>
+			  </ul>
+		</div>
+		</div>
+		<!--输入购买数量-->
+		<div id="editDiv" style="display:none">
+			<div  style='width:350px;' >
+				<div style='width:320px;margin-left: 3%;' class='form-group has-feedback'>
+					<p>请输入购买数量</p>
+					<input type='number' ng-model="cart.num"/>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div th:include="shop/public :: #footnav"></div>
+<span id="themesBtn"></span>
+
+<script type="text/javascript" src="/plugin/layer/layer.js"></script>
+</body>
+</html>

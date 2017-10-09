@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>HaoMiao - 商品类别</title>
+    <script src="/public/jquery.js"></script>
+    <script src="/public/angular.min.js"></script>
+    <script src="/controller/goodsTypeController.js"></script>
+    <div th:include="base/public :: #head"></div>
+</head>
+
+<body  id="app" ng-app="myApp" ng-controller="GoodsTypeController">
+<div id="wrap">
+    <nav th:include="base/public :: #top-nav"></nav>
+
+    <div class="container-fluid">
+
+        <!-- Side menu -->
+        <div class="sidebar-nav nav-collapse collapse">
+            <div th:include="base/public :: #side1"></div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle b_C3F7A7 collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse1"><i class="icon-magic"></i> <span>会员管理</span></a>
+                </div>
+                <!-- sssssssssssssssssssssssssssssssssss            style="height:auto"  ssssssssssssssssssssssssssssssssssss-->
+                <div id="collapse1" class="accordion-body collapse" >
+                    <div class="accordion-inner">
+                        <a class="accordion-toggle" th:href="@{/admin/customer}"><i class="icon-star"></i> 查看会员</a>
+                        <a class="accordion-toggle" href="/admin/customer/toadd"><i class="icon-list-alt"></i> 添加会员</a>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle b_9FDDF6 collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse2"><i class="icon-reorder"></i> <span>商品管理</span></a>
+                </div>
+                <div id="collapse2" class="accordion-body collapse" style="height:auto">
+                    <div class="accordion-inner">
+                        <a class="accordion-toggle" href="/admin/goods/"><i class="icon-rss"></i> 查看商品</a>
+                        <a class="accordion-toggle" href="/admin/goods/toadd"><i class="icon-calendar"></i> 添加商品</a>
+                        <a class="accordion-toggle" href="/admin/goodsType"><i class="icon-picture"></i> 商品类别</a>
+                    </div>
+                </div>
+            </div>
+            <div th:include="base/public :: #side2"></div>
+        </div>
+        <!-- /Side menu -->
+        <!-- Main window -->
+        <div class="main_container" id="gallery_page">
+            <div class="row-fluid">
+                <ul class="breadcrumb">
+                    <li><a href="/toadmin">主页</a> <span class="divider">/</span></li>
+                    <li><a href="/admin/goods/">商品管理</a> <span class="divider">/</span></li>
+                    <li class="active">商品类别</li>
+                </ul>
+                <h2 class="heading">
+                   类别列表
+                    <div class="btn-group pull-right">
+                      <a href="/admin/goodsType/toadd"><button type="button" class="btn btn-info ml-10" >添加</button></a>
+                        <button class="btn"><i class="icon-edit"></i> 添加类别</button>
+                    </div>
+                </h2>
+            </div>
+            <div style="margin-left:2%">
+                <div class="panel panel-default">
+                    <div class="panel-body" >
+                        关键字：
+                        <input type="text" ng-model="query.name" style="width:200px" ng-change="firstPage();"/>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                <tr>
+                                    <th style="width:2%"><input name="dataItem" onclick="checkAll(this)" type="checkbox" value="0"/></th>
+                                    <th width="25%">id</th>
+                                    <th width="25%">类别名称</th>
+                                    <th width="25%">添加日期</th>
+                                    <th width="25%">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in items">
+                                    <td style="width: 2%" ><input name="dataItem" type="checkbox" value="{{item.id}}"/></td>
+                                    <td>{{item.id}}</td>
+                                    <td>{{item.typeName}}</td>
+                                    <td>{{item.addDate|date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                                    <td>
+                                        <a  class="btn btn-danger" ng-click="onRemoveItem(item);">删除</a>
+                                        <a  class="btn btn-primary" href="/admin/goodsType/toEdit?id={{item.id}}">编辑</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="inline pull-right page">
+                            <input id="myPage" type="text" onchange="myPage();" style="width:80px" placeholder="自定义页数"/>
+                            <button ng-click="firstPage();">首页</button>
+                            <button ng-click="prevPage();">上一页</button>
+                            {{total}} 条记录 {{pageNo}}/{{totalPage}} 页 <button ng-click="nextPage();">下一页</button>
+                            <button ng-click="lastPage();">尾页</button>
+                        </div>
+
+                        <input type="hidden" th:value="${msg}" id="msg"/>
+                    </div>
+                </div>
+            </div>
+                        <!--End Advanced Tables -->
+        <!-- /Main window -->
+    </div>
+
+    </div>
+</div>
+<div th:include="base/public :: #foot"></div>
+
+
+<script src="/goods/article.js"></script>
+<script src="/public/common.js"></script>
+<script type="text/javascript" src="/plugin/layer/layer.js"></script>
+
+<script type="text/javascript">
+
+    function toPage(pageNo, callback) {
+
+        angular.element(document.getElementById('app')).scope().toPage(pageNo, callback);
+    }
+    function myPage(){
+        var pageNo=$("#myPage").val();
+        toPage(pageNo);
+    }
+
+    window.onload = function(){
+        var msg=$("#msg").val();
+        if(msg!=""){
+            layer.alert(msg,{icon: 4, title:"提示信息"});
+        }
+    }
+</script>
+</body>
+
+</html>

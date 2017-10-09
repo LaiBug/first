@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>HaoMiao - 会员列表</title>
+    <script src="/public/jquery.js"></script>
+    <script src="/public/angular.min.js"></script>
+    <script src="/controller/customerController.js"></script>
+    <div th:include="base/public :: #head"></div>
+</head>
+<body  id="app" ng-app="myApp" ng-controller="CustomerController">
+<div id="wrap">
+    <nav th:include="base/public :: #top-nav"></nav>
+
+    <div class="container-fluid">
+
+        <!-- Side menu -->
+        <div class="sidebar-nav nav-collapse collapse">
+            <div th:include="base/public :: #side1"></div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle b_C3F7A7 collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse1"><i class="icon-magic"></i> <span>会员管理</span></a>
+                    </div>
+                    <!-- sssssssssssssssssssssssssssssssssss            style="height:auto"  ssssssssssssssssssssssssssssssssssss-->
+                    <div id="collapse1" class="accordion-body collapse"  style="height:auto">
+                        <div class="accordion-inner">
+                            <a class="accordion-toggle" th:href="@{/admin/customer}"><i class="icon-star"></i> 查看会员</a>
+                            <a class="accordion-toggle" href="/admin/customer/toadd"><i class="icon-list-alt"></i> 添加会员</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle b_9FDDF6 collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse2"><i class="icon-reorder"></i> <span>商品管理</span></a>
+                    </div>
+                    <div id="collapse2" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <a class="accordion-toggle" href="/admin/goods/"><i class="icon-rss"></i> 查看商品</a>
+                            <a class="accordion-toggle" href="/admin/goods/toadd"><i class="icon-calendar"></i> 添加商品</a>
+                            <a class="accordion-toggle" href="/admin/goodsType"><i class="icon-picture"></i> 商品类别</a>
+                        </div>
+                    </div>
+                </div>
+                <div th:include="base/public :: #side2"></div>
+        </div>
+        <!-- /Side menu -->
+
+
+        <!-- Main window -->
+        <div class="main_container" id="gallery_page">
+            <div class="row-fluid">
+                <ul class="breadcrumb">
+                    <li><a href="/toadmin" class="a_post">主页</a> <span class="divider">/</span></li>
+                    <li><a href="/admin/customer/">会员管理</a> <span class="divider">/</span></li>
+                    <li class="active">查看会员</li>
+                </ul>
+                <h2 class="heading">
+                    会员列表
+                    <div class="btn-group pull-right">
+                        <a href="/admin/customer/toadd"><button type="button" class="btn btn-info ml-10" >添加</button></a>
+                        <button class="btn"><i class="icon-edit"></i> 添加会员</button>
+                    </div>
+                </h2>
+            </div>
+            <h1>angularjs省、市、区 三级联动 </h1>
+            <div>
+                <label>
+                    省份： <select   ng-model="city" ng-options="s.item_name for s in citys | limitTo:31"  >
+                    <option value=""  >--请选择--</option>
+
+                </select>
+
+                </label>
+
+                <label ng-if="city">
+
+                    市： <select ng-model="$parent.qu"  ng-options="sh.item_name for sh in citys | filter : cityFilter"  >
+                           <option value="" >--请选择--</option>
+                              </select>
+                  </label>
+                <label ng-if="qu">
+                    县/区： <select ng-model="$parent.xian" ng-options="sc.item_name for sc in citys | filter : xianFilter" >
+                                <option value="">--请选择--</option>
+                           </select>
+                </label>
+
+                <br />
+
+            </div>
+            <div style="margin-left:2%">
+                <div class="panel panel-default">
+                    <div class="panel-body" >
+                        关键字：
+                        <input type="text" ng-model="query.name" style="width:200px" ng-change="firstPage();"/>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                <tr>
+                                    <th style="width:2%"><input name="dataItem" onclick="checkAll(this)" type="checkbox" value="0"/></th>
+                                    <th width="10%">会员名</th>
+                                    <th width="10%">头像</th>
+                                    <th width="10%">移动电话</th>
+                                    <th width="10%">固定电话</th>
+                                    <th width="20%">地址</th>
+                                    <th width="25%">注册时间</th>
+                                    <th width="15%">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in items">
+                                    <td style="width: 2%" ><input name="dataItem" type="checkbox" value="{{item.id}}"/></td>
+                                    <td>{{item.name}}</td>
+                                    <td>  <img src="/pics/customer/{{item.pics}}" style="width:100px;height:100px" /></td>
+                                    <td>{{item.movephone}}</td>
+                                    <td>{{item.telphone}}</td>
+                                    <td>{{item.address}}</td>
+                                    <td>{{item.addDate|date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                                    <td>
+                                        <a  class="btn btn-danger" ng-click="onRemoveItem(item);">删除</a>
+                                        <a  class="btn btn-primary" href="/admin/customer/toEdit?id={{item.id}}">编辑</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="inline pull-right page">
+                            <input id="myPage" type="text" onchange="myPage();" style="width:80px" placeholder="自定义页数"/>
+                            <button ng-click="firstPage();">首页</button>
+                            <button ng-click="prevPage();">上一页</button>
+                            {{total}} 条记录 {{pageNo}}/{{totalPage}} 页 <button ng-click="nextPage();">下一页</button>
+                            <button ng-click="lastPage();">尾页</button>
+                        </div>
+
+                        <input type="hidden" th:value="${msg}" id="msg"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Main window -->
+
+    </div>
+</div>
+<div th:include="base/public :: #foot"></div>
+<script type="text/javascript" src="/plugin/layer/layer.js"></script>
+
+
+</body>
+
+</html>
