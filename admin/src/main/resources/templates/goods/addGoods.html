@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>HaoMiao - 添加商品</title>
+    <script src="/public/jquery.js"></script>
+    <script src="/public/angular.min.js"></script>
+    <div th:include="base/public :: #head"></div>
+</head>
+<body ng-app="myApp" ng-controller="siteCtrl">
+<div id="wrap">
+    <nav th:include="base/public :: #top-nav"></nav>
+
+    <div class="container-fluid">
+
+        <!-- Side menu -->
+        <div class="sidebar-nav nav-collapse collapse">
+            <div th:include="base/public :: #side1"></div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle b_C3F7A7 collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse1"><i class="icon-magic"></i> <span>会员管理</span></a>
+                    </div>
+                    <!-- sssssssssssssssssssssssssssssssssss            style="height:auto"  ssssssssssssssssssssssssssssssssssss-->
+                    <div id="collapse1" class="accordion-body collapse" >
+                        <div class="accordion-inner">
+                            <a class="accordion-toggle" th:href="@{/admin/customer}"><i class="icon-star"></i> 查看会员</a>
+                            <a class="accordion-toggle" href="/admin/customer/toadd"><i class="icon-list-alt"></i> 添加会员</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle b_9FDDF6 collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse2"><i class="icon-reorder"></i> <span>商品管理</span></a>
+                    </div>
+                    <div id="collapse2" class="accordion-body collapse" style="height:auto">
+                        <div class="accordion-inner">
+                            <a class="accordion-toggle" href="/admin/goods/"><i class="icon-rss"></i> 查看商品</a>
+                            <a class="accordion-toggle" href="/admin/goods/toadd"><i class="icon-calendar"></i> 添加商品</a>
+                            <a class="accordion-toggle" href="/admin/goodsType"><i class="icon-picture"></i> 商品类别</a>
+                        </div>
+                    </div>
+                </div>
+            <div th:include="base/public :: #side2"></div>
+        </div>
+        <!-- /Side menu -->
+        <!-- Main window -->
+        <div class="main_container" id="gallery_page">
+            <div class="row-fluid">
+                <ul class="breadcrumb">
+                    <li><a href="/toadmin">主页</a> <span class="divider">/</span></li>
+                    <li><a href="/admin/goods/">商品管理</a> <span class="divider">/</span></li>
+                    <li class="active">添加商品</li>
+                </ul>
+                <h2 class="heading">
+                   添加商品
+                </h2>
+            </div>
+            <div class="row-fluid">
+                <div class="widget widget-padding span12">
+                    <div class="widget-header">
+                        <i class="icon-picture"></i>
+                        <h5>添加商品</h5>
+                        <div class="widget-buttons">
+                            <a href="http://masonry.desandro.com/" data-title="Documentation" class="tip" target="_blank"><i class="icon-external-link"></i></a>
+                            <a href="#" class="tip" data-title="Add a new image" data-toggle="modal" data-target="#example_modal"><i class="icon-plus"></i></a>
+                            <a href="#" data-title="Collapse" data-collapsed="false" class="tip collapse"><i class="icon-chevron-up"></i></a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div id="gallery-container">
+                            <form id="formlogin" method="post" th:action="@{/admin/goods/add}"  enctype="multipart/form-data">
+
+                                <div class="item item-fore1">
+                                    <label for="goodsName" class="login-label name-label"></label>
+                                    <input id="goodsName" type="text" class="itxt" name="goodsName" tabindex="1" autocomplete="off" placeholder="商品名" />
+                                    <span class="clear-btn"></span>
+                                </div>
+                                <div id="entry" class="item item-fore2" style="visibility: visible;">
+                                    <label class="login-label pwd-label" for="price"></label>
+                                    <input type="text" id="price" name="price" class="itxt itxt-error" tabindex="2" autocomplete="off" placeholder="单价" />
+                                    <span class="clear-btn"></span>
+                                </div>
+                                <div class="item item-fore1">
+                                    <label for="unit" class="login-label name-label"></label>
+                                    <input id="unit" type="text" class="itxt" name="unit" tabindex="1" autocomplete="off" placeholder="计量单位" />
+                                    <span class="clear-btn"></span>
+                                </div>
+
+                                <div class="item item-fore1">
+                                    <label for="stock" class="login-label name-label"></label>
+                                    <input id="stock" type="text" class="itxt" name="stock" tabindex="1" autocomplete="off" placeholder="库存量" />
+                                    <span class="clear-btn"></span>
+                                </div>
+                                <div class="item item-fore1">
+                                    <label for="num" class="login-label name-label"></label>
+                                    <input id="num" type="text" class="itxt" name="num" tabindex="1" autocomplete="off" placeholder="上架量" />
+                                    <span class="clear-btn"></span>
+                                </div>
+                                <div class="item item-fore1">
+                                    <label for="types" class="login-label name-label"></label>
+                                    <select  id="types" multiple="true" name="types" size="7" th:placeholder="类别" tabindex="1" lass="itxt">
+                                        <option value="">按住ctr可多选</option>
+                                        <option value="{{v.typeName}}" ng-repeat="(k, v) in goodsTypeMap" >{{v.typeName}}</option>
+                                    </select>
+                                    <span class="clear-btn"></span>
+                                </div>
+                                <div class="item item-fore1">
+                                    <label for="discount" class="login-label name-label"></label>
+                                    <input id="discount" type="text" class="itxt" name="discount" tabindex="1" autocomplete="off" placeholder="折扣" />
+                                    <span class="clear-btn"></span>
+                                </div>
+                                <div class="item item-fore1">
+                                    <label for="remark" class="login-label name-label"></label>
+                                    <input id="remark" type="text" class="itxt" name="remark" tabindex="1" autocomplete="off" placeholder="备注" />
+                                    <span class="clear-btn"></span>
+                                </div>
+                                <div >
+                                    <label for="pic" class="login-label name-label"></label>
+                                    <input id="pic" type="file" class="itxt" name="pic" tabindex="1"  />
+                                    <span class="clear-btn"></span>
+                                </div>
+                                <div id="showpic">
+                                    <img src=""  style="float: right;top: 230px;left: 270px;max-width: 200px; max-height:200px;position: absolute;"/>
+                                </div>
+                                <div class="item item-fore5">
+                                    <div class="login-btn">
+                                        <button type="button" class="btn-img btn-entry" id="loginsubmit" tabindex="6"  onclick="suermessage()">添&nbsp;&nbsp;&nbsp;&nbsp;加</button>
+
+
+                                <input id="reset" type="reset" value="&nbsp;重&nbsp;置&nbsp;" class="btn btn-default btn-lg "/><br/>
+                                        <input type="hidden" th:value="${msg}" id="msg"/>
+                                </div>
+                                 </div>
+                            </form>
+                        </div>
+                    </div> <!-- /widget-body -->
+                </div> <!-- /widget -->
+            </div> <!-- /row-fluid -->
+        </div>
+        <!-- /Main window -->
+
+    </div>
+</div>
+<div th:include="base/public :: #foot"></div>
+<script type="text/javascript" src="/plugin/layer/layer.js"></script>
+<script>
+    var app = angular.module('myApp', []);
+
+    app.controller('siteCtrl', function($scope, $http) {
+        $http({
+            method: 'GET',
+            url: '/admin/goodsType/getGoodsType2'
+        }).then(function successCallback(response) {
+            $scope.goodsTypeMap = response.data;
+        })
+    })
+    window.onload = function(){
+        var msg=$("#msg").val();
+        if(msg!=""){
+            layer.alert(msg,{icon: 4, title:"提示信息"});
+        }
+    }
+
+    document.getElementById('pic').onchange = function() {
+        var imgFile = this.files[0];
+        var fr = new FileReader();
+        fr.onload = function() {
+            document.getElementById('showpic').getElementsByTagName('img')[0].src = fr.result;
+        };
+        fr.readAsDataURL(imgFile);
+    };
+
+    function suermessage(){
+        var goodsName=$("#goodsName").val();
+        if(goodsName==""){
+            layer.alert("请输入商品名称",{icon: 4, title:"错误信息"});
+            return false;
+        }
+        var price=$("#price").val();
+        if(price==""){
+            layer.alert("请输入单价",{icon: 4, title:"错误信息"});
+            return false;
+        }
+        var unit=$("#unit").val()
+        if(unit==""){
+            layer.alert("请输入计量单位",{icon: 4, title:"错误信息"});
+            return false;
+        }
+        var stock=$("#stock").val()
+        if(stock==""){
+            layer.alert("请输入库存量",{icon: 4, title:"错误信息"});
+            return false;
+        }
+        var num=$("#num").val()
+        if(num==""){
+            layer.alert("请输入上架量",{icon: 4, title:"错误信息"});
+            return false;
+        }
+        if(num>stock){
+            layer.alert("上架量不得大于库存",{icon: 4, title:"错误信息"});
+            return false;
+        }
+        var type=$("#type").val()
+        if(type==""){
+            layer.alert("请选择类别",{icon: 4, title:"错误信息"});
+            return false;
+        }
+        var discount=$("#discount").val()
+        if(discount==""){
+            layer.alert("请输入折扣",{icon: 4, title:"错误信息"});
+            return false;
+        }
+        var remark=$("#remark").val()
+        if(remark==""){
+            layer.alert("请输入备注",{icon: 4, title:"错误信息"});
+            return false;
+        }
+
+        layer.confirm('确认添加？',{icon: 4, title:"添加商品"},function(){
+            $("#formlogin").submit();
+        })
+    }
+</script>
+</body>
+</html>

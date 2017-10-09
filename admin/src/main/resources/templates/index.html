@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
+
+  <head>
+
+    <title>HaoMiao-首页</title>
+
+    <script src="/public/angular.min.js"></script>
+    <div th:include="base/public :: #head"></div>
+  </head>
+  <body>
+    <div id="wrap">
+      <nav th:include="base/public :: #top-nav"></nav>
+    <div class="container-fluid">
+     
+      <!-- Side menu -->
+      <div class="sidebar-nav nav-collapse collapse">
+        <div th:include="base/public :: #side1"></div>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle b_C3F7A7 collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse1"><i class="icon-magic"></i> <span>会员管理</span></a>
+            </div>
+            <div id="collapse1" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <a class="accordion-toggle" th:href="@{/admin/customer}"><i class="icon-star"></i> 查看会员</a>
+                <a class="accordion-toggle" href="/admin/customer/toadd"><i class="icon-list-alt"></i> 添加会员</a>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle b_9FDDF6 collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse2"><i class="icon-reorder"></i> <span>商品管理</span></a>
+            </div>
+            <div id="collapse2" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <a class="accordion-toggle" href="/admin/goods/"><i class="icon-rss"></i> 查看商品</a>
+                <a class="accordion-toggle" href="/admin/goods/toadd"><i class="icon-calendar"></i> 添加商品</a>
+                <a class="accordion-toggle" href="/admin/goodsType"><i class="icon-picture"></i> 商品类别</a>
+              </div>
+            </div>
+
+        </div>
+        <div th:include="base/public :: #side2"></div>
+
+      </div>
+      <!-- /Side menu -->
+
+      <!-- Main window -->
+      <div class="main_container" id="dashboard_page">
+        <div class="row-fluid">
+          <div class="overview_boxes">
+            <div class="box_row clearfix">
+              <div class="widget-tasks-statistics">
+                <div class="userstats clearfix" style="margin-top: 25px;">
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#example_modal2">
+                    <div class="white">
+                      <i style="color:#E28271" class="icon-eye-open"></i>
+                      <p style="color:#E28271">+85%</p>
+                    </div>
+                    <div class="widget">
+                      <input class="knob" data-width="120" data-height="120" data-displayInput="false" data-readOnly="true" data-thickness=".15" value="85" />
+                    </div>
+                    <p><strong>+530</strong>Visits this month</p>
+                  </a>
+                </div>
+              </div>
+              <div class="widget-tasks-statistics">
+                <div class="userstats clearfix" style="margin-top: 25px;">
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#example_modal2">
+                    <div class="white">
+                      <i style="color:#98E5EA" class="icon-user"></i>
+                      <p style="color:#98E5EA">+13%</p>
+                    </div>
+                    <div class="widget">
+                      <input class="knob" data-width="120" data-height="120" data-displayInput="false" data-readOnly="true" data-thickness=".15" value="13"/>
+                    </div>
+                    <p><strong>57</strong>New Users</p>
+
+                  </a>
+                </div>
+              </div>
+              <div class="widget-tasks-statistics">
+                <div class="userstats clearfix" style="margin-top: 25px;">
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#example_modal2">
+                    <div class="white">
+                      <i style="color:#AEEA98" class="icon-bullhorn"></i>
+                      <p style="color:#AEEA98">+15%</p>
+                    </div>
+                    <div class="widget">
+                      <input class="knob" data-width="120" data-height="120" data-displayInput="false" data-readOnly="true" data-thickness=".15" value="15"/>
+                    </div>
+                    <p><strong>35/235</strong>Finished Tickets</p>
+                  </a>
+                </div>
+              </div>
+
+            </div> 
+            <div class="box_row clearfix">
+              <div class="widget-tasks-statistics">
+                <div class="userstats clearfix" style="margin-top: 25px;">
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#example_modal2">
+                    <div class="white">
+                      <i style="color:#98AEEA" class="icon-thumbs-up"></i>
+                      <p style="color:#98AEEA">+55%</p>
+                    </div>
+                    <div class="widget">
+                      <input class="knob" data-width="120" data-height="120" data-displayInput="false" data-readOnly="true" data-thickness=".15" value="55"/>
+                    </div>
+                    <p><strong>$14,230</strong>Income</p>
+                  </a>
+                </div>
+              </div>
+              <div class="widget-tasks-statistics">
+                <div class="userstats clearfix" style="margin-top: 25px;">
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#example_modal2">
+                    <div class="white">
+                      <i style="color:#EA98AB" class="icon-credit-card"></i>
+                      <p style="color:#EA98AB">+35%</p>
+                    </div>
+                    <div class="widget">
+                      <input class="knob" data-width="120" data-height="120" data-displayInput="false" data-readOnly="true" data-thickness=".15" value="35"/>
+                    </div>
+                    <p><strong>152</strong>New Likes</p>
+                  </a>
+                </div>
+              </div>
+              <div class="widget-tasks-statistics">
+                <div class="userstats clearfix" style="margin-top: 25px;">
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#example_modal2">
+                    <div class="white">
+                      <i style="color:#F6BF99" class="icon-phone"></i>
+                      <p style="color:#F6BF99">+97%</p>
+                    </div>
+                    <div class="widget">
+                      <input class="knob" data-width="120" data-height="120" data-displayInput="false" data-readOnly="true" data-thickness=".15" value="97"/>
+                    </div>
+                    <p><strong>592</strong>Leads Generated</p>
+                  </a>
+                </div>
+              </div>
+
+            </div> 
+          </div>
+        </div>
+      </div>
+      <!-- /Main window -->
+    </div><!--/.fluid-container-->
+    </div><!-- wrap ends-->
+
+
+    <!-- example modal -->
+    <div id="example_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Support Ticket</h3>
+      </div>
+      <div class="modal-body">
+        <p>Here you can view and manage this support ticket.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/js/raphael-min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src='assets/js/sparkline.js'></script>
+    <script type="text/javascript" src='assets/js/morris.min.js'></script>
+    <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.masonry.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.imagesloaded.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.facybox.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.alertify.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.knob.js"></script>
+    <script type='text/javascript' src='assets/js/fullcalendar.min.js'></script>
+    <script type='text/javascript' src='assets/js/jquery.gritter.min.js'></script>
+    <script type="text/javascript" src="assets/js/realm.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.slimscroll.min.js"></script>
+  </body>
+</html>

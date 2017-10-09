@@ -1,0 +1,9 @@
+<div class="btn-group ">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" ng-click="onSelect()">
+        {{name}}
+        <span ng-show="disable==false" class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" ng-show="showSelector" style="display:block;">
+        <li><a href="#" ng-click="onItemClick(item)" ng-repeat="item in items">{{item.name}}</a></li>
+    </ul>
+</div>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>HaoMiao - 用户信息</title>
+    <script src="/jquery/jquery.min.js?v=2.1.4"></script>
+    <div th:include="base/public :: #head"></div>
+    <script type="application/javascript" src="/bootstrap-switch/js/bootstrap-switch.min.js" ></script>
+    <script type="text/javascript" src="/jquery-ui/jquery.js"></script>
+    <script type="application/javascript" src="/jquery-ui/jquery-ui.min.js"></script>
+    <link href="/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="/js/content.min.js?v=1.0.0"></script>
+    <script type="text/javascript" src="/angular-1.3.9/angular.min.js"></script>
+    <script type="application/javascript" src="/angular-1.3.9/angular-file-upload.min.js"></script>
+    <script type="application/javascript" src="/angular-1.3.9/angular-cc.js"></script>
+    <script type="application/javascript" src="/bootstrap-switch/js/bootstrap-switch.min.js" ></script>
+    <script src="/controller/common.js"></script>
+    <script src="/sweetalert/sweetalert.min.js"></script>
+
+    <!--tiem-->
+    <script type="text/javascript" src="/s/moment.js"></script>
+    <script type="text/javascript" src="/s/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="/s/daterangepicker.css" />
+
+    <!--layer.js-->
+    <link rel="stylesheet" type="text/css" href="/plugin/layer/skin/layer.css"/>
+    <script src="/plugin/layer/layer.js"></script>
+
+
+    <!--chart-->
+    <script src="/highcharts/js/highcharts.js"></script>
+    <script src="/ngComponents/ngCharts.js"></script>
+    <script type="application/javascript" src="/ngComponents/ngComponents.js"></script>
+    <style>
+        div.location .label {
+            width: 140px;
+            float: left;
+            margin-right: 3px;
+            display: block;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body ng-app="myapp" ng-controller="BaseController">
+<div id="wrap">
+    <nav th:include="base/public :: #top-nav"></nav>
+
+    <div class="container-fluid">
+
+        <!-- Side menu -->
+        <div class="sidebar-nav nav-collapse collapse">
+            <div th:include="base/public :: #side1"></div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle b_C3F7A7 collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse1"><i class="icon-magic"></i> <span>会员管理</span></a>
+                    </div>
+                    <!-- sssssssssssssssssssssssssssssssssss            style="height:auto"  ssssssssssssssssssssssssssssssssssss-->
+                    <div id="collapse1" class="accordion-body collapse" >
+                        <div class="accordion-inner">
+                            <a class="accordion-toggle" th:href="@{/admin/customer}"><i class="icon-star"></i> 查看会员</a>
+                            <a class="accordion-toggle" href="/admin/customer/toadd"><i class="icon-list-alt"></i> 添加会员</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle b_9FDDF6 collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse2"><i class="icon-reorder"></i> <span>商品管理</span></a>
+                    </div>
+                    <div id="collapse2" class="accordion-body collapse" >
+                        <div class="accordion-inner">
+                            <a class="accordion-toggle" href="/admin/goods/"><i class="icon-rss"></i> 查看商品</a>
+                            <a class="accordion-toggle" href="/admin/goods/toadd"><i class="icon-calendar"></i> 添加商品</a>
+                            <a class="accordion-toggle" href="/admin/goodsType"><i class="icon-picture"></i> 商品类别</a>
+                        </div>
+                    </div>
+                </div>
+                <div th:include="base/public :: #side2"></div>
+        </div>
+
+
+        <!-- /Side menu -->
+        <!-- Main window -->
+        <div class="wrapper wrapper-content animated fadeInRight"  style="margin-left:12%">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>任务报表</h5>
+
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#">选项1</a>
+                            </li>
+                            <li><a href="#">选项2</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <form class="form-inline" ng-submit="firstPage();">
+                        <div class="form-group">
+                            任务名称：
+                            <select style="border-radius:5px;width: 170px" class="form-control" ng-model="query.id" id="id">
+                                <option value="{{k.goods.goodsName}}" ng-repeat="(k, v) in adActiveTaskMap">{{v}}</option>
+                            </select>&nbsp;&nbsp;
+                            起始时间：
+                            <input  style="border-radius:5px;" class="form-control" type="text" name="birthdate" ng-model="query.start"/>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('input[name="birthdate"]').daterangepicker({
+                                        timePicker: true,
+                                        singleDatePicker: true,
+                                        showDropdowns: true,
+                                        timePicker24Hour: true,
+                                        locale: {
+                                            format: 'YYYY/MM/DD HH:mm:ss'
+                                        }
+                                    });
+                                });
+                            </script>
+                            结束时间：
+                            <input  style="border-radius:5px;" class="form-control" type="text" name="birthdate2" ng-model="query.end"/>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('input[name="birthdate2"]').daterangepicker({
+                                        timePicker: true,
+                                        singleDatePicker: true,
+                                        timePicker24Hour: true,
+                                        locale: {
+                                            format: 'YYYY/MM/DD HH:mm:ss'
+                                        }
+                                    });
+                                });
+                            </script>
+                        </div>
+                        <button type="submit" class="btn btn-primary" ng-click="onQuery()">按时查询</button>
+                        <button type="submit" class="btn btn-primary" ng-click="onStats()">按天统计</button>
+                        <a href="/adActiveTask/index.html" type="button" class="btn btn-info">返回</a>
+                    </form>
+                    <div style="width:80%; height:400px;" id="chart"></div>
+                </div>
+                <div style="width:80%; height:400px;" id="chart2"></div>
+            </div>
+            <!-- End Panel Other -->
+        </div>
+        </div>
+    </div>
+<div th:include="base/public :: #foot"></div>
+
+<script type="text/javascript" src="/plugin/layer/layer.js"></script>
+<script>
+
+    var app = angular.module("myapp", ['angularFileUpload']);
+    RegisterSwitch1(app);
+    app.controller("BaseController", function($scope, $http) {
+        $scope.menuActive = "report";
+        $scope.title = "投放效果分析";
+        $scope.query = {};
+//    $scope.query.id = /*[[${id}]]*/ 'Sebastian';
+        var now = new Date();
+        var d = new Date(now.setDate(now.getDate()-1));
+
+        $scope.onBeforeQuery = function(){
+
+            $scope.query.start = $('input[name="birthdate"]').val();
+            $scope.query.end = $('input[name="birthdate2"]').val();
+
+            if($scope.query.start) {
+                var b =  $scope.query.start;
+                $scope.query.start = b.replace(/-/g, '/');
+                $scope.query.start = new Date($scope.query.start).Format("yyyy/MM/dd hh:mm:ss");
+            }
+        }
+        if($scope.query.end) {
+            var b =  $scope.query.end;
+            $scope.query.end = b.replace(/-/g, '/');
+            $scope.query.end = new Date($scope.query.end).Format("yyyy/MM/dd hh:mm:ss");
+        }
+
+//     自动加载的方法
+        $(function(){
+            $http.get("/shop/cart")
+                    .success(function(data) {
+                        drawLines("chart", data,
+                                {
+                                    title:'投放效果分析',
+                                    yis:[
+                                        {title:"库存",field:"stock"},
+                                        {title:"上架",field:"num"}],
+                                    xis:{title:"名字", field:"goodsName"}})
+                    });
+        });
+
+
+        $scope.onQuery = function() {
+            $scope.onBeforeQuery();
+            $http.get("/shop/cart",{params:$scope.query})
+                    .success(function(data) {
+                        drawLines("chart", data,
+                                {
+                                    title:'投放效果分析',
+                                    yis:[
+                                        {title:"库存",field:"stock"},
+                                        {title:"上架",field:"num"}],
+                                    xis:{title:"名字", field:"goodsName"}})
+                    });
+
+        }
+
+        $scope.onStats = function() {
+            $scope.onBeforeQuery();
+            $http.get("/shop/cart",{params:$scope.query})
+                    .success(function(data) {
+                        drawLines("chart", data,
+                                {
+                                    title:'投放效果分析',
+                                    yis:[
+                                        {title:"库存",field:"stock"},
+                                        {title:"上架",field:"num"}],
+                                    xis:{title:"名字", field:"goodsName"}})
+                    });
+
+        }
+
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        var now = new Date();
+        var d2 = new Date(new Date().setDate(new Date().getDate()+1));
+        $scope.query.end = d2.getUTCFullYear()+"/"+(d2.getMonth()+1)+"/"+d2.getDate()+" 00:00:00";
+        $(function () {
+            if ($scope.query.id != "") {
+
+                $scope.onQuery()
+            }
+        });
+    });
+
+
+
+</script>
+</body>
+</html>

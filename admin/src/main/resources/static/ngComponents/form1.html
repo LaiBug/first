@@ -1,0 +1,37 @@
+<form id="advertiser_form" method="post" enctype="multipart/form-data" ng-submit="onSave()">
+    <div class="resource-form">
+        <div ng-if="model.title" class="title"><span class="title-triangle-bottom"></span><strong class="fc-gray">{{model.title}}</strong>
+        </div>
+        <div>
+
+            <table class="form">
+                <tbody>
+                <tr ng-repeat="field in model.fields">
+                    <td width="25%" class="labels"><span ng-if="field.required!=false" class="required">*</span><span>{{field.title}}：</span></td>
+                    <td width="30%">
+                        <label ng-if="field.type=='label'">{{instance[field.field]}}</label>
+                        <input ng-if="field.type=='password'" type="password" ng-model="instance[field.field]" placeholder="{{field.placeholder}}">
+                        <input ng-if="field.type=='text'" type="text" ng-model="instance[field.field]" placeholder="{{field.placeholder}}">
+                        <input ng-if="field.type=='number'" type="number"  ng-model="instance[field.field]" placeholder="{{field.placeholder}}" class="{{field.unit?'short':''}}">
+                        <textarea ng-if="field.type=='textarea'" ng-model="instance[field.field]"></textarea>
+                        <select ng-if="field.type=='select'" ng-model="instance[field.field]" ng-options="value.value as value.name for value in field.selector" ></select>
+                        <ccdaterange ng-if="field.type=='daterange'" ng-model="instance[field.field]"></ccdaterange>
+                        <ccmultiselector ng-if="field.type=='multiselect'" ng-model="multiselects[field.field]"></ccmultiselector>
+                        {{field.unit}}
+                    </td>
+                    <td class="tips" ng-if="field.defaultMsg"><span class="prompt-icon"></span><span ng-bind-html="getHtml(field.defaultMsg)"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div ng-if="!model.disableButton" class="create-resource-btns">
+        <input type="submit" name="submitForm" value="{{model.saveButtonTitle || '确定'}}"
+
+               class="btn btn-success">
+        <input type="button" name="formCancel" value="取消"
+               class="btn"
+               ng-click="onCancel()">
+    </div>
+</form>

@@ -1,0 +1,89 @@
+<div class="resource-operate">
+    <div class="btn-group ml1" style="float:left;">
+        <a ng-if="!model.buttons || model.buttons.length <= 0" class="btn resource-create-btn" type="button" href="{{model.remote.newUrl}}"><span class="ico-add"></span><span>新增</span></a>
+        <a class="btn" type="button" href="#" ng-click="btn.onClick()" ng-repeat="btn in model.buttons"><span ng-if="btn.icon" class="{{btn.icon}}"></span> <span>{{btn.text}}</span> </a>
+    </div>
+
+    <div class="common-query-options">
+        <div style="padding-left: 10px;"></div>
+        <div class="input-append search-btn">
+            <form id='queryForm' ng-submit="refresh()">
+                <input class="span2" id="appendedInputButton" type="text" name="name"  ng-model="query.filter">
+                <button class="btn" type="submit">搜索</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="list">
+    <table class="reportCell">
+        <thead>
+
+        <tr>
+            <th ng-if="model.action && model.action.onEdit" class="left" axis="col0" style="width:15px;"><div style="width: 15px;" class="sundefined"></div></th>
+            <th ng-if="model.action && model.action.onDelete" class="left" axis="col0" style="width:15px;">
+                <div style="width: 15px;" class="sundefined"></div></th>
+            <th class="left" axis="col0" style="width:15px;" ng-repeat="icon in model.icons">
+                <div style="width: 15px;" class="sundefined">
+
+                </div></th>
+            <th width="{{col.width}}" class="{{col.align}}" ng-repeat="col in cols">
+               {{col.title}}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+
+            <tr class="h-44" ng-repeat="item in items">
+                <td ng-if="model.action && model.action.onEdit"><div style="width: 15px;">
+											<span>
+											<a class="alter-icon" href="#" ng-click="model.action.onEdit(item)" title="修改"></a>
+											</span>
+                </div></td>
+                <td ng-if="model.action && model.action.onDelete">
+                    <div style="width: 15px;">
+													<span>
+													<a class="dele-icon" href="#" ng-click="onDelete(item)" title="删除"></a>
+													</span>
+                    </div>
+                </td>
+                <td ng-repeat="icon in model.icons">
+                    <div style="width: 15px;">
+                                <span>
+                                <i title="{{icon.title}}" style="font-size:15px;cursor: pointer;" class="fa fa-{{icon.icon}}"
+                                        ng-click="icon.onClick(item)"></i>
+                                </span>
+                    </div>
+                </td>
+                <td ng-repeat="col in cols" class="{{col.align}}">
+                    <span ng-if="!col.type || col.type=='text'">
+                    <span ng-if="!col.link">{{col.formatter?getFormat([item[col.field]], col, item):item[col.field]}}</span>
+                    <span ng-if="col.link"><a ng-href="{{getLink(col, item)}}" >{{col.formatter?getFormat([item[col.field]], col, item):item[col.field]}}</a></span>
+                    </span>
+                    <span ng-if="col.type=='image'">
+                    <span ng-if="!col.link"><img src="{{item[col.field]}}" /></span>
+                    <span ng-if="col.link"><a ng-href="{{getLink(col, item)}}" target="_blank" ><img src="{{item[col.field]}}" /></a></span>
+                    </span>
+                    <span ng-if="col.type=='switch'">
+                        <ccswitch ng-model="item['__' + col.field]"></ccswitch>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="resource-operate">
+
+    <div class="resource-pagination">
+        <span>显示行数：</span>
+        <ccselector ng-model="pageSizeSelector"></ccselector>
+        <span class="pages">共<span>{{totalPage}}</span>页（<span class="fc-dark-orange">{{total}}</span>行数据），转到第</span>
+        <ccselector ng-model="pageNoSelector"></ccselector>
+        <span>页</span>
+        <div class="btn-group">
+            <a href="javascript:;" class="btn" type="button" ng-click="prevPage()"><span class="page-arrow-left"></span></a>
+        </div>
+        <div class="btn-group">
+            <a href="javascript:;" class="btn" type="button" ng-click="nextPage()"><span class="page-arrow-right"></span></a>
+        </div>
+    </div>
+</div>

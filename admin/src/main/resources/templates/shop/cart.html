@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+	<title>购物车</title>
+	<script type="text/javascript" src="/public/angular.min.js"></script>
+	<script type="text/javascript" src="/controller/cartController.js"></script>
+
+	<div th:include="shop/public :: #head"></div>
+</head>
+
+
+<body ng-app="myApp" ng-controller="CartController">
+<div th:include="shop/public :: #top-nav"></div>
+<!-- Header End====================================================================== -->
+<div id="mainBody">
+	<div class="container">
+	<div class="row">
+		<!-- Sidebar ================================================== -->
+		<div th:include="shop/public :: #side"></div>
+		<!-- Sidebar end=============================================== -->
+
+	<div class="span9">
+    <ul class="breadcrumb">
+		<li><a href="index.html">Home</a> <span class="divider">/</span></li>
+		<li class="active"> SHOPPING CART</li>
+    </ul>
+	<h3>  购物车 [ <small>{{cartNum()}}个商品 </small>]<a href="products.html" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> 继续购物  </a></h3>
+	<hr class="soft"/>
+		<p  ng-show="!carts.length" style="color:red;font-size:20px; text-align: center ">您的购物车为空</p>
+		<hr class="soft" ng-show="!carts.length" />
+	<table class="table table-bordered" ng-show="carts.length">
+              <thead>
+                <tr >
+                  <th>商品</th>
+                  <th>描述</th>
+                  <th>数量</th>
+				  <th>单价</th>
+                  <th colspan="2">折后价</th>
+                  <th>Total</th>
+				</tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in carts">
+                  <td> <img width="60" src="/pics/goods/{{item.goods.pics}}" alt=""/></td>
+                  <td>{{item.goods.goodsName}}<br/>{{item.goods.remark}}</td>
+				  <td>
+					<div class="input-append">
+						<input class="span1" style="max-width:34px" value="{{item.num}}"  ng-change="changeNum(item)" ng-model="item.num" placeholder="1" id="appendedInputButtons" size="16" type="text"/>
+						<button class="btn" type="button" ng-click="reduce(item)"><i class="icon-minus"></i></button>
+						<button class="btn" type="button" ng-click="add(item)"><i class="icon-plus"></i></button>
+						<button class="btn btn-danger" type="button" ng-click="onRemoveItem(item)"><i class="icon-remove icon-white"></i></button>
+					</div>
+				  </td>
+                  <td>${{item.goods.price |number}}</td>
+                  <td colspan="2" ng-if="item.goods.discount===10.0">--</td>
+					<td colspan="2" ng-if="item.goods.discount!==10.0">${{discount(item)| number}}</td>
+					<td>${{price(item) |number}}</td>
+                </tr>
+
+
+				 <tr>
+                  <td colspan="6" style="text-align:right">总购买数量:	</td>
+                  <td>{{totalQuentity()|number}}</td>
+                </tr>
+
+				<tr>
+					<td colspan="6" style="text-align:right">总价:	</td>
+					<td class="label label-important" style="display:block"> <strong> ${{totalPrice() |number}}</strong></td>
+				</tr>
+				<tr>
+
+					<td colspan="7"><button type="button" class="btn btn-danger"  ng-click="clearCart()" style="float: right">清空购物车</button></td>
+				</tr>
+
+				</tbody>
+            </table>
+
+		<!--输入购买数量-->
+		<div id="editDiv" style="display:none">
+			<div  style='width:350px;' >
+				<div style='width:320px;margin-left: 3%;' class='form-group has-feedback'>
+					<p>请输入购买数量</p>
+					<input type='number' ng-model="cart.num"/>
+				</div>
+			</div>
+		</div>
+	<a href="products.html" class="btn btn-large"  ng-show="carts.length"  ><i class="icon-arrow-left"></i> 继续购物</a>
+	<a href="login.html" class="btn btn-large pull-right"  ng-show="carts.length" >结算  <i class="icon-arrow-right"></i></a>
+	
+</div>
+</div></div>
+</div>
+<!-- MainBody End ============================= -->
+<!-- Footer ================================================================== -->
+<div th:include="shop/public :: #footnav"></div>
+<span id="themesBtn"></span>
+<script type="text/javascript" src="/plugin/layer/layer.js"></script>
+</body>
+</html>

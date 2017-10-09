@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
+<div id="head">
+    <meta charset="utf-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Bluth Company"/>
+    <script src="/public/jquery.js"></script>
+    <link href="/assets/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <link rel="shortcut icon" href="/assets/ico/favicon.html"/>
+    <link href="/assets/css/alertify.css" rel="stylesheet"/>
+    <link href="/assets/css/theme.css" rel="stylesheet"/>
+    <link rel="Favicon Icon" href="/favicon.ico"/>
+
+
+</div>
+
+<div id="top-nav">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <div class="logo">
+                    <img src="/assets/img/logo.png" title="浩渺图标"/>
+                </div>
+                <div class="top-menu visible-desktop">
+                    <ul class="pull-left">
+                        <li><a  data-notification="2" href="#"><i class="icon-envelope"></i> 备用</a></li>
+                        <li><a  data-notification="3" href="/admin/cart/" ><i class="icon-globe"></i> 购物车</a></li>
+                    </ul>
+                    <ul class="pull-right">
+                        <li><a href="/loginOut"><i class="icon-off"></i>退出</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="foot">
+    <!-- Bootstrap Js -->
+    <script type="text/javascript" src="/assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/assets/js/raphael-min.js"></script>
+    <script type="text/javascript" src='/assets/js/sparkline.js'></script>
+    <script type="text/javascript" src='/assets/js/morris.min.js'></script>
+    <script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.masonry.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.imagesloaded.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.facybox.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.alertify.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.knob.js"></script>
+    <script type="text/javascript" src="/assets/js/fullcalendar.min.js"></script>
+    <script type='text/javascript' src='/assets/js/jquery.gritter.min.js'></script>
+    <script type="text/javascript" src="/assets/js/jquery.slimscroll.min.js"></script>
+</div>
+
+<div id="side1">
+    <div class="user_side clearfix">
+        <img src="/assets/img/odinn.jpg" alt="Odinn god of Thunder"/>
+        <h5><span th:text="${session.currentUser.username}" ></span></h5>
+        <a href="/admin/user" ><i class="icon-cog"></i> 去查看个人信息</a>
+    </div>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle active b_F79999" href="/admin/user"><i class="icon-dashboard"></i> <span>我的信息</span></a>
+            </div>
+        </div>
+</div>
+
+<div id="side2">
+        <div class="accordion-group">
+            <div class="accordion-heading" disabled="disabled">
+                <a class="accordion-toggle b_C1F8A9" href="#" ><i class="icon-bar-chart"></i> <span>订单管理</span></a>
+            </div>
+        </div>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle b_9FDDF6" href="/admin/bulletin"><i class="icon-bullhorn" ></i> <span>公告管理</span></a>
+            </div>
+        </div>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle b_F5C294" href="#"><i class="icon-user"></i> <span>用户管理</span></a>
+            </div>
+        </div>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+            <a class="accordion-toggle b_F6F1A2" href="/admin/report"><i class="icon-tasks"></i> <span>统计报表</span></a>
+           </div>
+        </div>
+</div>
+</html>

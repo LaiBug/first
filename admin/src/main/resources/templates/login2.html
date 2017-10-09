@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
+  <head>
+
+    <title>HaoMiao - Login</title>
+	  <div th:include="base/public :: #head"></div>
+  </head>
+  <body>
+    <div id="wrap">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+          	<div class="row-fluid">
+				<div class="widget container-narrow">
+					<div class="widget-header">
+						<i class="icon-user"></i>
+						<h5>欢迎使用XXX登录系统</h5>
+					</div>  
+					<div class="widget-body clearfix" style="padding:25px;">
+		      			<form action="/login" method="post">
+		      				<div style="padding:10px 0">
+		      					<a style="" href="#" class="btn btn-large btn-block btn-primary"><i class="icon-facebook-sign"></i>  66666赶紧登录</a>
+		      				</div>
+		      				<div class="divider">
+		      					<hr class="pull-left"/><span>or</span><hr class="pull-right"/>
+		      				</div>
+							<div class="control-group">
+								<div class="controls">
+									<input class="btn-block" type="text" id="inputEmail"  name="username" placeholder="账号"/>
+								</div>
+							</div>
+							<div class="control-group">
+								<div class="controls">
+									<input class="btn-block" type="password" id="inputPassword" name="password" placeholder="密码"/>
+								</div>
+							</div>
+
+							<input type="hidden" th:value="${msg}" id="msg"/>
+							 <div class="control-group">
+								<div class="controls clearfix">
+									<label style="width:auto" class="checkbox pull-left">
+										<input type="checkbox"/> 记住我
+									</label>
+									<a style="padding: 5px 0px 0px 5px;" href="#" class="pull-right">忘记密码?</a>
+								</div>
+							</div>					
+							<button type="submit" class="btn pull-right">登录</button>
+		      			</form>
+					</div>  
+				</div>  
+      			<div style="text-align:center">
+      				<p>Neen an account? <a href="#">注册新账号</a></p>
+      			</div>
+        	</div><!--/row-fluid-->
+        </div><!--/span10-->
+      </div><!--/row-fluid-->
+    </div><!--/.fluid-container-->
+    </div><!-- wrap ends-->
+
+  <script>
+	  window.onload = function(){
+		  var msg=$("#msg").val();
+		  if(msg!=""){
+			  layer.alert(msg,{icon: 4, title:"提示信息"});
+		  }
+	  }
+
+
+  </script>
+	<script type="text/javascript" src="/plugin/layer/layer.js"></script>
+  </body>
+</html>

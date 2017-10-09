@@ -1,0 +1,15 @@
+<div class="fixed-table-pagination">
+    <div class="pull-left pagination-detail">
+                <span
+                        class="pagination-info">当前显示第 {{(pagination.pageNo-1)*pagination.pageSize + 1}} 到第 {{(pagination.pageNo-1)*pagination.pageSize+pagination.numberOfElements}} 条记录，总共 {{pagination.totalCount}} 条记录</span>
+    </div>
+    <div class="pull-right pagination">
+        <ul class="pagination pagination-outline">
+            <li class="page-first{{pagination.pageNo<=1 ?' disabled':''}}"><a href="javascript:void(0)" ng-click="toFirst()">首页</a></li>
+            <li class="page-pre{{pagination.hasPrevious?'':' disabled'}}"><a href="javascript:void(0)" ng-click="toPrevious()">上一页</a></li>
+            <li class="page-number{{pagination.pageNo==n?' active':''}}" ng-repeat="n in pageNumbers"><a href="javascript:void(0)" ng-click="toPage(n)">{{n}}</a></li>
+            <li class="page-next{{pagination.hasNext?'':' disabled'}}"><a href="javascript:void(0)" ng-click="toNext()">下一页</a></li>
+            <li class="page-last{{pagination.pageNo==pagination.totalPage ?' disabled':''}}"><a href="javascript:void(0)" ng-click="toLast()">尾页</a></li>
+        </ul>
+    </div>
+</div>
